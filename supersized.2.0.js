@@ -153,7 +153,7 @@ Thanks to Aen for preloading, fade effect, & vertical centering
   			var ratio = imageheight/imagewidth;
 	
   			//Resize image to proper ratio
-  			if ((browserheight/browserwidth) > ratio){
+  			if (((browserheight/browserwidth) > ratio) == (options.crop === 1)) {
   			    $(this).height(browserheight);
   			    $(this).width(browserheight / ratio);
   			} else {
@@ -172,6 +172,7 @@ Thanks to Aen for preloading, fade effect, & vertical centering
 	
 	$.fn.supersized.defaults = {
 			vertical_center: 1,
+			crop: 1,
 			slideshow: 1,
 			navigation:1,
 			transition: 1, //0-None, 1-Fade, 2-slide top, 3-slide right, 4-slide bottom, 5-slide left
