@@ -1,0 +1,10 @@
+# Supersized
+
+This is a fork of Sam Dunn's ["Supersized - Fullscreen Slideshow jQuery Plugin"][original_project]
+
+It includes two new features
+
+  1. It maintains the aspect ratios of the original images
+  2. It offers an option to display full rather than cropped the images
+
+  [original_project]: http://www.buildinternet.com/project/supersized/]
