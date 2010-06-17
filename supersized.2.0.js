@@ -20,6 +20,7 @@ Thanks to Aen for preloading, fade effect, & vertical centering
 			$('#content').show();
 			if ($('#slideshow .activeslide').length == 0) $('#supersize a:first').addClass('activeslide');
 			if (options.slide_captions == 1) $('#slidecaption').html($('#supersize .activeslide').find('img').attr('title'));
+			$('#supersize').resizenow();
 			if (options.navigation == 0) $('#navigation').hide();
 			//Slideshow
 			if (options.slideshow == 1){
@@ -136,41 +137,40 @@ Thanks to Aen for preloading, fade effect, & vertical centering
 	//Adjust image size
 	$.fn.resizenow = function() {
 		var options = $.extend($.fn.supersized.defaults, $.fn.supersized.options);
-	  	return this.each(function() {
-	  		
-			//Define image ratio
-			var ratio = options.startheight/options.startwidth;
-			
-			//Gather browser and current image size
-			var imagewidth = $(this).width();
-			var imageheight = $(this).height();
-			var browserwidth = $(window).width();
+	  return this.each(function() {
+	    var browserwidth = $(window).width();
 			var browserheight = $(window).height();
-			var offset;
 
-			//Resize image to proper ratio
-			if ((browserheight/browserwidth) > ratio){
-			    $(this).height(browserheight);
-			    $(this).width(browserheight / ratio);
-			    $(this).children().height(browserheight);
-			    $(this).children().width(browserheight / ratio);
-			} else {
-			    $(this).width(browserwidth);
-			    $(this).height(browserwidth * ratio);
-			    $(this).children().width(browserwidth);
-			    $(this).children().height(browserwidth * ratio);
-			}
-			if (options.vertical_center == 1){
-				$(this).children().css('left', (browserwidth - $(this).width())/2);
-				$(this).children().css('top', (browserheight - $(this).height())/2);
-			}
+			$(this).height(browserheight);
+			$(this).width(browserwidth);
+
+	    $(this).find('img').each(function() {
+  			//Gather browser and current image size
+  			var imagewidth = $(this).attr('naturalWidth');
+  			var imageheight = $(this).attr('naturalHeight');
+
+  			//Define image ratio
+  			var ratio = imageheight/imagewidth;
+	
+  			//Resize image to proper ratio
+  			if ((browserheight/browserwidth) > ratio){
+  			    $(this).height(browserheight);
+  			    $(this).width(browserheight / ratio);
+  			} else {
+  			    $(this).width(browserwidth);
+  			    $(this).height(browserwidth * ratio);
+  			}
+
+  			if (options.vertical_center == 1){
+  				$(this).css('left', (browserwidth - $(this).width())/2);
+  				$(this).css('top', (browserheight - $(this).height())/2);
+  			}
+  		});
 			return false;
 		});
 	};
 	
-	$.fn.supersized.defaults = { 
-			startwidth: 4,  
-			startheight: 3,
+	$.fn.supersized.defaults = {
 			vertical_center: 1,
 			slideshow: 1,
 			navigation:1,
